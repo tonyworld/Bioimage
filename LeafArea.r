@@ -1,5 +1,8 @@
-## graphical application of EBImage
-## for calculate an area ratio of leaf blades
+## Copyright Tong Wei, July 2012
+## Graphical application of R/Bioconductor EBImage
+
+## Automated leaf area measuring, with adjustable parameter of background 
+## intensity (0.8 herein)
 
 
 library(EBImage)

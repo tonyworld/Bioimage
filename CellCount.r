@@ -1,16 +1,17 @@
-## graphical function
-## for automated pattern recognition using R/biocondcutor "EBImage" pkg
+## Copyright Tong Wei, July 2012
+## Graphical application of R/biocondcutor "EBImage"
 
-## adjustable parameters: thresh(w, h, offset), makeBrush(size), 
-## small spots with less pixels (< 100 here)
+## Automated nuclei counting with adjustable parameters: thresh(w, h, offset), 
+## makeBrush(size), small spots with less pixels (< 100 herein)
+
 
 library(EBImage)
 
 # read in images
 setwd("d:/working/")
-files <- "sample.tif"
+files <- grep(".tif$", dir(), value = T)
 pic <- readImage(files)
-pic.blue <- channel(pic, mode = "blue")  # extract corresponding channel
+pic.blue <- channel(pic, mode = "blue")  # extract the corresponding channel
 
 # filter 1: remove background noise
 tmp <- thresh(pic.blue, w = 100, h = 100, offset = 0.2)  
@@ -30,7 +31,9 @@ for (i in mt) {
 imageData(pic.lab) <- tmp2
 
 pic.lab <- fillHull(pic.lab)
-  # max(pic.lab) is the count of nuclei
+nuclei.count <- max(pic.lab)
+cat("The number of nuclei is ", nuclei.count, ".\n", sep = "")
+
 # output the labelled image
 pic.out <- paintObjects(pic.lab, pic, col = c('yellow', NA))
 xy <- hullFeatures(pic.lab)[, c('g.x', 'g.y')]
